@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculo Numerico</title>
+    <meta name="description" content="Aplicación para calculo">
+   <!--OPEN GRAPH-->
+    <meta property="og:title" content="Aplicación para el calculo">
+    <meta name="keywords" content="Matematica, calculo, numerico, app, univeridad, unefa">
+    <meta property="og:image" content="---">
+    <meta property="og:description" content="Calculo numerico">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" href="./src/styles.css">
+    <link rel="canonical" href="https://xcentt.github.io/Calculonumerico/">
+
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#09f">
+
+    <!--Font-Family Google-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">
+    </head>
+
+<body>
+    <main>
+    <div class="side-bar-container"></div>
+
+    <script>
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.side-bar-container').innerHTML = data;
+            }); 
+    </script>
+    </main>
+</body>
+</html>

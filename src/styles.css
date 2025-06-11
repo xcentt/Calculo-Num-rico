@@ -1,0 +1,117 @@
+notable-regular {
+  font-family: "Notable", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.notable-bold {
+  font-family: "Notable", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+body { 
+    font-family: "Notable", sans-serif;
+    margin: 0;
+    background-color: white;
+}
+ 
+.logo img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.side-bar:hover .logo img {
+    width: 150px;
+    height: 150px; /* Increase logo size on hover */
+    transition: width 0.3s ease, height 0.3s ease; /* Smooth transition for logo size */
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px; /* Initial width */
+    height: 100vh;
+    background-color: #1c1c1c;
+    overflow: hidden; /* Hide content initially */
+    position: fixed; /* Keep sidebar fixed on the left */
+    padding: 10px;
+    transition: width 0.3s ease; /* Smooth transition for width */
+}
+
+.side-bar:hover {
+    width: 270px; /* Expanded width on hover */
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px; /* Added margin for spacing */
+}
+
+.menu ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Reduced gap for better alignment */
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 10px; /* Reduced padding for a cleaner look */
+    text-decoration: none;
+    transition: 0.2s ease;
+    color: white; /* Ensure text is white */
+}
+
+.menu li a {
+    display: flex; /* Make the entire li clickable */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none; 
+    padding: 10px; /* Add padding to the a element */
+    box-sizing: border-box; /* Include padding in width and height */
+    color: white; /* Ensure text is white */
+}
+
+.menu li a img {
+    width: 40px; /* Reduced image size */
+    height: 40px;
+    object-fit: contain;
+    opacity: 1; /* Ensure images are always visible */
+    margin: auto; /* Center the images */
+    padding: 5px;   
+    transition: margin 0.3s ease; /* Smooth transition for position */
+}
+
+.menu li a .menu-text {
+    opacity: 0; /* Initially hide the text */
+    transition: opacity 0.3s ease; /* Smooth transition for text visibility */
+    display: none;
+}
+
+.menu li:hover {
+    background-color: #3f3f3f;
+}
+
+.side-bar:hover .menu li a .menu-text {
+    opacity: 1; /* Make the text fully visible on hover */
+    display: block; 
+}
+
+.side-bar:hover .menu li a img {
+    margin: 0; /* Return to default position on hover */
+}
+   
+ 

@@ -1,0 +1,262 @@
+notable-regular {
+  font-family: "Notable", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.notable-bold {
+  font-family: "Notable", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+body { 
+    font-family: "Notable", sans-serif;
+    margin: 0;
+    background-color: white;
+}
+
+.logo img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.side-bar:hover .logo img {
+    width: 150px;
+    height: 150px;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 100%;  
+    background-color: #1c1c1c;
+    overflow: hidden;
+    position: fixed;
+    padding: 10px;
+    transition: width 0.3s ease;
+}
+
+.side-bar:hover {
+    width: 270px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 10px; 
+    text-decoration: none;
+    transition: 0.2s ease;
+    color: white; 
+} 
+
+.menu li a {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    color: white; 
+}
+
+.menu li a img {
+    width: 40px; 
+    height: 40px;
+    object-fit: contain;
+    opacity: 1; 
+    margin: auto; 
+    padding: 5px;  
+    transition: margin 0.3s ease;
+}
+
+.menu li a .menu-text {
+    opacity: 0;
+    transition: opacity 0.3s ease; 
+    display: none; 
+}
+
+.menu li:hover {
+    background-color: #3f3f3f;
+}
+
+.side-bar:hover .menu li a .menu-text {
+    opacity: 1;
+    display: block; 
+}
+
+.side-bar:hover .menu li a img {
+    margin: 0; 
+}
+
+
+.Header{
+    display: flex;
+    flex-direction: column;
+    margin-left: 120px;
+    padding: 20px;
+}  
+
+.Header h1 {
+    text-align: center; 
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #333;
+    text-shadow: 0 0 20px hsl(0, 100%, 100%), 0 0 15px rgb(0, 0, 0);  
+    margin: 0;
+    margin-bottom: 25px;    
+} 
+ 
+.Header div{ 
+    padding: 10px;
+    border-left: #092ae6 5px solid;
+}      
+
+.Header span{
+    color:red;
+    text-shadow: 0 0 20px hsl(0, 100%, 100%), 0 0 10px rgb(255, 0, 0);   
+} 
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 120px;
+    padding: 20px;  
+}
+
+.content td input[type="number"]{
+    width: 100px; 
+    padding: 5px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+} 
+
+.MoreCoor{
+    width: 100%;  
+    height: 30px;  
+    margin-bottom: 5px;
+    align-self: center;
+    border-style: none;
+    border-radius: 5px;
+    background-color: #3f3f3f; 
+    color: white; 
+    font-size:x-large;   
+    font-weight: 700;  
+}    
+ 
+.MoreCoor:hover{
+    background-color: #090de6; 
+    cursor: pointer; 
+} 
+  
+.MinorCords{
+    width: 100%;  
+    height: 30px;  
+    align-self: center; 
+    border-style: none;
+    border-radius: 5px;
+    background-color: #3f3f3f; 
+    color: white; 
+    font-size:x-large;     
+    font-weight: 600;  
+} 
+
+.MinorCords:hover{
+    background-color: #fa0000; 
+    cursor: pointer;  
+}  
+
+.Calcular{
+    width: 100%;  
+    height: 30px;  
+    margin-top: 5px;
+    align-self: center; 
+    border-style: none;
+    border-radius: 5px;
+    background-color: #3f3f3f; 
+    color: white; 
+    font-size:x-large;     
+    font-weight: 600;  
+}
+
+.Calcular:hover{
+    background-color: #555555; 
+    cursor: pointer;   
+}
+
+.matrix-row {
+    display: flex;
+    justify-content: center;
+    gap: 5px; /* Espacio entre los módulos */
+}
+
+.matrix-cell {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px 15px; /* Ajusta el padding para el tamaño del número */
+    text-align: center;
+    font-family: monospace; /* Fuente monoespaciada para alinear mejor los números */
+    font-size: 1.1em;
+    display: flex; /* Para centrar el contenido dentro de la celda */
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box; /* Importante para el cálculo del ancho */
+}
+
+.matrix-wrapper {
+    position: relative;
+    display: inline-block; /* Para que el wrapper se ajuste al contenido */
+}
+
+.matrix-wrapper::before,
+.matrix-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20px; /* Ancho de los paréntesis */
+    border: 2px solid #000;
+    border-radius: 50% / 10%; /* Para darle forma redondeada */
+}
+
+.matrix-wrapper::before {
+    left: -20px;
+    border-right: none; /* Eliminar borde del lado interior */
+}
+
+.matrix-wrapper::after {
+    right: -20px;
+    border-left: none; /* Eliminar borde del lado interior */
+}
+
+/* Ajuste para el contenido de la matriz */
+.matrix-container {
+    /* ... tu estilo de grid/flexbox ... */
+    margin: 0 20px; /* Margen para que el contenido no se superponga con los paréntesis */
+} 
