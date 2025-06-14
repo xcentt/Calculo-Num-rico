@@ -1,0 +1,283 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #303030; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 20px;
+    box-sizing: border-box;
+}
+ 
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-left: 120px; /* O el ancho de tu sidebar */
+} 
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: 70px; /* Ajusta según el ancho de tu sidebar en móvil */
+    }
+}
+
+.logo img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.side-bar:hover .logo img {
+    width: 150px;
+    height: 150px; /* Increase logo size on hover */
+    transition: width 0.3s ease, height 0.3s ease; /* Smooth transition for logo size */
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px; /* Initial width */
+    height: 100vh;
+    background-color: #1c1c1c;
+    overflow: hidden; /* Hide content initially */
+    position: fixed; /* Keep sidebar fixed on the left */
+    left: 0;
+    top: 0;
+    padding: 10px;
+    transition: width 0.3s ease; /* Smooth transition for width */
+}
+
+.side-bar:hover {
+    width: 270px; /* Expanded width on hover */
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px; /* Added margin for spacing */
+}
+
+.menu ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Reduced gap for better alignment */
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 10px; /* Reduced padding for a cleaner look */
+    text-decoration: none;
+    transition: 0.2s ease;
+    color: white; /* Ensure text is white */
+}
+
+.menu li a {
+    display: flex; /* Make the entire li clickable */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none; 
+    padding: 10px; /* Add padding to the a element */
+    box-sizing: border-box; /* Include padding in width and height */
+    color: white; /* Ensure text is white */
+}
+
+.menu li a img {
+    width: 40px; /* Reduced image size */
+    height: 40px;
+    object-fit: contain;
+    opacity: 1; /* Ensure images are always visible */
+    margin: auto; /* Center the images */
+    padding: 5px;   
+    transition: margin 0.3s ease; /* Smooth transition for position */
+}
+
+.menu li a .menu-text {
+    opacity: 0; /* Initially hide the text */
+    transition: opacity 0.3s ease; /* Smooth transition for text visibility */
+    display: none;
+}
+
+.menu li:hover {
+    background-color: #3f3f3f;
+}
+
+.side-bar:hover .menu li a .menu-text {
+    opacity: 1; /* Make the text fully visible on hover */
+    display: block; 
+}
+
+.side-bar:hover .menu li a img {
+    margin: 0; /* Return to default position on hover */
+}
+    
+
+h1, h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    display: flex; /* Para alinear la etiqueta y el input en la misma línea */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay espacio */
+    align-items: center; /* Centra verticalmente los ítems */
+    justify-content: center;
+} 
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+    flex: 1; /* Ocupa el espacio disponible */
+    min-width: 150px; /* Asegura que la etiqueta tenga un ancho mínimo */
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    flex: 2; /* Permite que el input ocupe más espacio */
+    min-width: 200px; /* Asegura que el input tenga un ancho mínimo */
+}
+
+        .progress-segmented-container {
+            display: flex;
+            width: 100%;
+            height: 25px; /* Más alto para el indicador */
+            background-color: #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative; /* Necesario para posicionar el thumb */
+            cursor: grab; /* Cursor por defecto */
+        }
+        .progress-segmented-container.dragging {
+            cursor: grabbing; /* Cursor cuando se está arrastrando */
+        }
+
+
+        .progress-segment {
+            flex-grow: 1;
+            background-color: transparent;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .progress-segment:last-child {
+            border-right: none;
+        }
+
+        .progress-segment.active {
+            background-color: #3b82f6; /* Azul para los segmentos activos */
+        }
+
+        .draggable-thumb {
+            position: absolute;
+            top: 50%; /* Centrar verticalmente */
+            transform: translate(-50%, -50%); /* Ajuste para centrar el pulgar en su punto */
+            height: 30px; /* Tamaño del indicador */
+            width: 30px;
+            background-color: #3b82f6; /* Color del indicador */
+            border-radius: 50%; /* Forma circular */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: left 0.1s linear, background-color 0.2s ease; /* Transición suave para el movimiento y color */
+            z-index: 10; /* Asegura que esté por encima de los segmentos */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white; /* Color del texto/icono dentro del thumb */
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Pequeño ajuste para centrar los valores */
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;}
+
+.input-group span#decimalPlacesValue {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #007bff;
+    min-width: 20px; /* Ancho mínimo para el número */
+    text-align: right;
+}
+
+.input-group small {
+    display: block;
+    margin-top: 5px;
+    color: #777;
+    font-size: 0.9em;
+    width: 100%; /* Ocupa el ancho completo */
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.results {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+#resultOutput {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+#iterationsList {
+    list-style: none;
+    padding: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+#iterationsList li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+#iterationsList li:last-child {
+    border-bottom: none;
+}

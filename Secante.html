@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Secante con Math.js</title>
+    <link rel="stylesheet" href="src/stylesSecante.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.min.js"></script>
+</head>
+<body>
+    <!-- Sidebar pegado a la izquierda -->
+    <section class="side-bar">
+        <div class="logo">
+            <img src="./assets/spline 1 black resize.webp" alt="Logo de la aplicacion">
+        </div>
+        <nav class="menu">
+            <ul>
+                <li>
+                    <a href="/CalculoNumerico/index.html">
+                        <img src="./assets/home.svg" alt="Inicio" class="imgSideBar">
+                        <span class="menu-text">Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/CalculoNumerico/SplieCuadratico.html">
+                        <img src="./assets/matrix.svg" alt="Spline Cuadrático" class="imgSideBar">
+                        <span class="menu-text">Spline Cuadrático</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#features">
+                        <img src="./assets/secante wave.svg" alt="Método Secante" class="imgSideBar">
+                        <span class="menu-text">Secante</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/CalculoNumerico/Graficadora.html">
+                        <img src="./assets/graphic.svg" alt="Gráficadora" class="imgSideBar">
+                        <span class="menu-text">Graficadora</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <!-- Fin Sidebar -->
+
+    <div class="container">
+        <h1>Calculadora del Método de la Secante</h1>
+
+        <div class="input-group">
+            <label for="functionInput">Función f(x):</label>
+            <input type="text" id="functionInput" value="cos(x) - x" placeholder="Ej: x^2 - 2*x + 1 o sin(x)">
+            <small>Usa 'x' como variable. Puedes usar 'sin(x)', 'cos(x)', 'exp(x)', 'sqrt(x)', 'log(x)', etc.</small>
+        </div>
+
+        <div class="input-group">
+            <label for="x0Input">Primer punto (x0):</label>
+            <input type="number" id="x0Input" value="0.5">
+        </div>
+
+        <div class="input-group">
+            <label for="x1Input">Segundo punto (x1):</label>
+            <input type="number" id="x1Input" value="1.0">
+        </div>
+
+        <div class="input-group">
+            <label for="toleranceInput">Tolerancia (ε):</label>
+            <input type="number" id="toleranceInput" value="0.0001" step="0.00001">
+        </div>
+
+        <div class="input-group">
+            <label for="maxIterationsInput">Máximo de iteraciones:</label>
+            <input type="number" id="maxIterationsInput" value="100">
+        </div>
+
+        <div class="input-group"> 
+        <div class="progress-container">
+        <label class="progress-label text-xl">  
+  Cantidad de decimales que deseas: (Valor: <span id="value4">7</span>)
+</label>
+        <div id="progress-segmented-visual" class="progress-segmented-container">
+            <!-- Los segmentos se generarán con JavaScript -->
+            <div class="draggable-thumb" id="segmented-thumb"></div>
+        </div>
+    </div>
+        </div>
+
+        <button id="calculateButton">Calcular Raíz</button>
+
+        <div class="results">
+            <h2>Resultados:</h2>
+            <p id="resultOutput">Esperando cálculo...</p>
+            <h3>Historial de Iteraciones:</h3>
+            <ul id="iterationsList"></ul>
+        </div>
+    </div>
+
+    <script src="src/SecanteJs.js"></script> 
+</body>
+</html>
