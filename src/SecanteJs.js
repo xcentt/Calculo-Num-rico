@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let x1 = parseFloat(x1Input.value);
         const tolerance = parseFloat(toleranceInput.value);
         const maxIterations = parseInt(maxIterationsInput.value);
-        const decimalPlaces = currentSegmentValue; // Usar el valor de la barra segmentada
+        const decimalPlaces = currentSegmentValue;
 
-        iterationsList.innerHTML = ''; // Limpiar historial anterior
+        iterationsList.innerHTML = ''; 
         resultOutput.textContent = 'Calculando...';
 
         let node;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 x_next = x_curr - fx_curr * (x_curr - x_prev) / (fx_curr - fx_prev);
 
                 const iterationLi = document.createElement('li');
-                // Usar toFixed(decimalPlaces) para formatear los números
+                
                 iterationLi.textContent = `Iteración ${iteration + 1}: x(i-1) = ${x_curr.toFixed(decimalPlaces)}, f(xi-1) = ${fx_curr.toFixed(decimalPlaces)}, x = ${x_next.toFixed(decimalPlaces)}`;
                 iterationsList.appendChild(iterationLi);
  
@@ -83,9 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- Lógica para la barra segmentada interactiva ---
-        const maxSegments = 15; // Corresponde al valor máximo
-        const minSegments = 1;  // Corresponde al valor mínimo
-        let currentSegmentValue = 7; // Valor inicial para la barra segmentada
+        const maxSegments = 15;
+        const minSegments = 1; 
+        let currentSegmentValue = 7;
         let isDraggingSegmentedBar = false;
 
         function createSegmentedBar() {

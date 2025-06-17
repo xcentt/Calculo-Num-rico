@@ -9,11 +9,43 @@ notable-regular {
   font-style: normal;
 }
 
-body { 
+h1{
     font-family: "Notable", sans-serif;
-    margin: 0;
-    background-color: white;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px; 
+}  
+
+p{
+    font-family: "Notable", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.9em; 
+    margin-bottom: 20px;  
 }
+ 
+body { 
+    font-family: Arial, sans-serif;
+    background-color: #303030; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 20px;
+    box-sizing: border-box; 
+}
+
+.maincontainer{
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin-left: 120px; 
+} 
 
 .logo img {
     width: 100px;
@@ -37,10 +69,12 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100px;
-    height: 100%;  
+    height: 100vh;  
     background-color: #1c1c1c;
     overflow: hidden;
     position: fixed;
+    left: 0;
+    top: 0; 
     padding: 10px;
     transition: width 0.3s ease;
 }
@@ -117,14 +151,12 @@ body {
 
 .Header{
     display: flex;
-    flex-direction: column;
-    margin-left: 120px;
-    padding: 20px;
+    flex-direction: column;  
 }  
 
 .Header h1 {
     text-align: center; 
-    font-size: 2.5em;
+    font-size: 2rem; 
     font-weight: 700;
     color: #333;
     text-shadow: 0 0 20px hsl(0, 100%, 100%), 0 0 15px rgb(0, 0, 0);  
@@ -145,9 +177,7 @@ body {
 .content{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-left: 120px;
-    padding: 20px;  
+    align-items: center; 
 }
 
 .content td input[type="number"]{
@@ -259,4 +289,4 @@ body {
 .matrix-container {
     /* ... tu estilo de grid/flexbox ... */
     margin: 0 20px; /* Margen para que el contenido no se superponga con los paréntesis */
-} 
+}  
