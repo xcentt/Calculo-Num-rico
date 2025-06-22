@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const calculateButton = document.getElementById('calculateButton');
     const resultOutput = document.getElementById('resultOutput');
     const iterationsList = document.getElementById('iterationsList');
- 
 
     calculateButton.addEventListener('click', calculateSecant);
 
     function calculateSecant() {
         const funcStr = functionInput.value;
+        console.log("Graficando función:", funcStr); 
         let x0 = parseFloat(x0Input.value);
         let x1 = parseFloat(x1Input.value);
         const tolerance = parseFloat(toleranceInput.value);
@@ -32,17 +32,19 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Método de la Secante
+        // Método de la Secante 
         let x_prev = x0;
         let x_curr = x1;
         let x_next;
         let iteration = 0;
         let fx_prev, fx_curr;
+        let approxXs = []; // Guardará los puntos aproximados
 
         try {
             while (iteration < maxIterations) {
                 fx_prev = node.evaluate({ x: x_prev });
                 fx_curr = node.evaluate({ x: x_curr });
+                approxXs.push(x_curr);
 
                 if (Math.abs(fx_curr - fx_prev) < 1e-12) {
                     resultOutput.textContent = `Error: División por cero o valores muy cercanos en la iteración ${iteration + 1}. Posiblemente f(x_prev) ≈ f(x_curr).`;
@@ -52,12 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 x_next = x_curr - fx_curr * (x_curr - x_prev) / (fx_curr - fx_prev);
 
                 const iterationLi = document.createElement('li');
-                
                 iterationLi.textContent = `Iteración ${iteration + 1}: x(i-1) = ${x_curr.toFixed(decimalPlaces)}, f(xi-1) = ${fx_curr.toFixed(decimalPlaces)}, x = ${x_next.toFixed(decimalPlaces)}`;
                 iterationsList.appendChild(iterationLi);
- 
+
                 if (Math.abs(x_next - x_curr) < tolerance || Math.abs(node.evaluate({ x: x_next })) < tolerance) { 
                     resultOutput.textContent = `Raíz aproximada encontrada: ${x_next.toFixed(decimalPlaces)} en ${iteration + 1} iteraciones.`;
+                    approxXs.push(x_next);
                     break;
                 }
 
@@ -69,11 +71,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     resultOutput.textContent = `Máximo de iteraciones (${maxIterations}) alcanzado. La raíz aproximada es: ${x_next.toFixed(decimalPlaces)}`;
                 }
             }
+            console.log("Valores de approxXs:", approxXs); 
         } catch (error) {
             resultOutput.textContent = `Error durante el cálculo: ${error.message}. Revisa los valores de entrada o la función.`;
         }
+ 
+        // Graficar los puntos aproximados en GeoGebra
+        try {
+            let node = math.parse(functionInput.value);
+            approxXs.forEach((x, i) => {
+                let y = node.evaluate({ x: x });
+                window.ggbApplet.evalCommand(`A${i+1} = (${x}, ${y})`);
+            });
+        } catch (e) {
+            console.log("Error al graficar los puntos en GeoGebra:", e);
+        }
+ 
+        // Enviar la función a GeoGebra
+        if (window.ggbApplet && typeof window.ggbApplet.evalCommand === "function") {
+            try {
+                window.ggbApplet.evalCommand('Delete[f]');
+            } catch (e) {}
+            try {
+                window.ggbApplet.evalCommand(`f(x) = ${funcStr}`);
+            } catch (e) {
+                console.log("Error al enviar la función a GeoGebra:", e);
+            }
+        } else {
+            console.log("GeoGebra aún no está listo para graficar.");
+        }
     }
-});  
+});
 
 // Función para actualizar el valor mostrado junto a los sliders estándar
         function updateRangeValue(rangeId, valueId) {
@@ -123,9 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const containerWidth = segments[0].offsetWidth * maxSegments;
             const positionRatio = (currentSegmentValue - minSegments) / (maxSegments - minSegments);
             const thumbWidth = thumb.offsetWidth;
-            let thumbLeft = (positionRatio * containerWidth);
-            const segmentWidth = segments.length > 0 ? segments[0].offsetWidth : 0;
-            thumbLeft = (currentSegmentValue - 0.5) * segmentWidth;
+            let thumbLeft = (currentSegmentValue - 0.5) * (segments.length > 0 ? segments[0].offsetWidth : 0);
             thumbLeft = Math.max(thumbWidth / 2, Math.min(containerWidth - thumbWidth / 2, thumbLeft));
             thumb.style.left = `${(thumbLeft / containerWidth) * 100}%`;
         }
@@ -133,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Función para manejar el arrastre (mouse y touch)
         function handleDrag(event) {
             if (!isDraggingSegmentedBar) return;
-
             event.preventDefault(); // Prevenir selección de texto o scroll
 
             const segmentedContainer = document.getElementById('progress-segmented-visual');
@@ -147,13 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Calcular la posición relativa dentro del contenedor
             const offsetX = clientX - containerRect.left;
             const containerWidth = containerRect.width;
-
-            // Calcular el valor basado en la posición
             // Dividir el ancho del contenedor por el número de segmentos para obtener el "ancho efectivo" de cada valor
             const segmentUnitWidth = containerWidth / maxSegments;
             let newValue = Math.round(offsetX / segmentUnitWidth);
 
-            // Asegurarse de que el valor esté dentro del rango min/max
+            // Asegurarse de que el valor esté dentro del rango min/max 
             newValue = Math.max(minSegments, Math.min(maxSegments, newValue));
 
             // Actualizar solo si el valor ha cambiado para evitar repintados excesivos
@@ -200,4 +223,4 @@ document.addEventListener('DOMContentLoaded', () => {
             window.addEventListener('resize', () => {
                 updateSegmentedProgressVisual(currentSegmentValue);
             });
-        });
+        }); 
