@@ -52,9 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 x_next = x_curr - fx_curr * (x_curr - x_prev) / (fx_curr - fx_prev);
+ 
+                // Calcular el error porcentual relativo si no es la primera iteración
+                let errorPorcentual = '';
+                if (iteration > 0) {
+                    errorPorcentual = `, Error: ${Math.abs((x_curr - x_prev) / x_curr * 100).toFixed(decimalPlaces)}%`; 
+                }
 
                 const iterationLi = document.createElement('li');
-                iterationLi.textContent = `Iteración ${iteration + 1}: x(i-1) = ${x_curr.toFixed(decimalPlaces)}, f(xi-1) = ${fx_curr.toFixed(decimalPlaces)}, x = ${x_next.toFixed(decimalPlaces)}`;
+                iterationLi.textContent = `Iteración ${iteration + 1}: x(i-1) = ${x_curr.toFixed(decimalPlaces)}, f(xi-1) = ${fx_curr.toFixed(decimalPlaces)}, x = ${x_next.toFixed(decimalPlaces)}${errorPorcentual}`;
                 iterationsList.appendChild(iterationLi);
 
                 if (Math.abs(x_next - x_curr) < tolerance || Math.abs(node.evaluate({ x: x_next })) < tolerance) { 
@@ -223,4 +229,4 @@ document.addEventListener('DOMContentLoaded', () => {
             window.addEventListener('resize', () => {
                 updateSegmentedProgressVisual(currentSegmentValue);
             });
-        }); 
+        });
