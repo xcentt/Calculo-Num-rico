@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Secante</title>
-    <link rel="stylesheet" href="src/stylesSecante.css"> 
+    <link rel="stylesheet" href="src/stylesSecante.css">
+    <link rel="icon" href="assets/favicon-removebg-preview.png" type="image/png">   
+            <!--Font-Family Google-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Notable&display=swap" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.min.js"></script>
 </head>
 <body>
@@ -15,7 +22,7 @@
         </div>
         <nav class="menu">
             <ul>
-                <li>
+                <li> 
                     <a href="index.html">
                         <img src="./assets/home.svg" alt="Inicio" class="imgSideBar">
                         <span class="menu-text">Inicio</span>
@@ -43,14 +50,20 @@
         </nav>
     </section>
     <!-- Fin Sidebar -->
-
-    <div class="container">
-        <h1>Calculadora del Método de la Secante</h1>
+ 
+    <div class="container"> 
+    <section class="Header">
+        <h1>Calculadora del Método de la Secante</h1> 
+        <div>
+        <p>El método de la secante es un <span>algoritmo numérico </span> utilizado para encontrar raíces de funciones. A diferencia del método de Newton, que requiere el cálculo de la derivada,<span> la secante utiliza dos puntos iniciales para aproximar la raíz. </span> Este método es <span> útil cuando la derivada no está disponible o es difícil de calcular</span>.</p> 
+        </p>
+       </div>   
+    </section> 
 
         <div class="input-group">
             <label for="functionInput">Función f(x):</label>
             <input type="text" id="functionInput" value="cos(x) - x" placeholder="Ej: x^2 - 2*x + 1 o sin(x)">
-            <small>Usa 'x' como variable. Puedes usar 'sin(x)', 'cos(x)', 'exp(x)', 'sqrt(x)', 'log(x)', etc.</small>
+            <small>Usa 'x' como variable. Puedes usar 'sin(x)', 'cos(x)', 'exp(x)', 'x^2 + 2*x + 1', 'log(x)', etc.</small> 
         </div>
 
         <div class="input-group">

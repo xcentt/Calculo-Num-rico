@@ -1,48 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculo Numerico</title>
-    <meta name="description" content="Aplicación para calculo">
-   <!--OPEN GRAPH-->
-    <meta property="og:title" content="Aplicación para el calculo">
-    <meta name="keywords" content="Matematica, calculo, numerico, app, univeridad, unefa">
-    <meta property="og:image" content="---">
-    <meta property="og:description" content="Calculo numerico">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <link rel="stylesheet" href="./src/stylessGraficadora.css">
-    <link rel="canonical" href="https://xcentt.github.io/Calculonumerico/">
-
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#09f"> 
- 
-    <!--Font-Family Google-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Graficadora</title>
+    <link rel="stylesheet" href="src/stylessGraficadora.css">   
+    <link rel="icon" href="assets/favicon-removebg-preview.png" type="image/png">  
+        <!--Font-Family Google-->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Notable&display=swap" rel="stylesheet">
     </head>
 <body> 
-    <div class="side-bar-container"></div>
+        <!-- Sidebar pegado a la izquierda -->
+    <section class="side-bar">  
+        <div class="logo">
+            <img src="./assets/spline 1 black resize.webp" alt="Logo de la aplicacion">
+        </div>
+        <nav class="menu">
+            <ul>
+                <li>
+                    <a href="index.html">
+                        <img src="./assets/home.svg" alt="Inicio" class="imgSideBar">
+                        <span class="menu-text">Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="SplieCuadratico.html">
+                        <img src="./assets/matrix.svg" alt="Spline Cuadrático" class="imgSideBar">
+                        <span class="menu-text">Spline Cuadrático</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Secante.html">
+                        <img src="./assets/secante wave.svg" alt="Método Secante" class="imgSideBar">
+                        <span class="menu-text">Secante</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Graficadora.html"> 
+                        <img src="./assets/graphic.svg" alt="Gráficadora" class="imgSideBar">
+                        <span class="menu-text">Graficadora</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <!-- Fin Sidebar -->
 
-    <script>
-        fetch('sidebar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.querySelector('.side-bar-container').innerHTML = data;
-            });
-    </script>
  
     <main>
             <header>
             <div class="headerContainer">
                 <h1>Graficadora</h1>
-                <p>Esta es una aplicación para la representación de puntos en un plano cartesiano.</p>
+                <h2>Esta es una aplicación para la <span>representación de puntos en un plano cartesiano</span>.</h2>   
             </div>  
         </header>
 
-        <section>
+        <section class="content">
             <div class="appContainer">
                  <div class="getNumbers">
                     <h2>¿Cual es el nombre de tu coordenada?</h2>

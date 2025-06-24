@@ -9,6 +9,13 @@ notable-regular {
   font-style: normal;
 }
 
+.gabarito-regular {
+  font-family: "Gabarito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400px;
+  font-style: normal; 
+} 
+
 h1{
     font-family: "Notable", sans-serif;
     font-weight: 700;
@@ -16,10 +23,29 @@ h1{
     font-size: 1.5em;
     color: #333;
     margin-bottom: 20px; 
+    text-shadow: 0 0 20px hsl(0, 100%, 100%), 0 0 15px rgb(0, 0, 0);
 }  
 
+h2{ 
+    font-family: "Gabarito", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.2em; 
+    color: #333; 
+    margin-bottom: 15px;  
+}
+
+h3{
+    font-family: "Gabarito", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1.1em; 
+    color: #333; 
+    margin-bottom: 10px;   
+}
+
 p{
-    font-family: "Notable", sans-serif;
+    font-family: "Gabarito", sans-serif;  
     font-weight: 400;
     font-style: normal;
     font-size: 0.9em; 
@@ -30,12 +56,23 @@ body {
     font-family: Arial, sans-serif;
     background-color: #303030; 
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center; 
     min-height: 100vh;
-    margin: 20px;
+    margin: 20px; 
     box-sizing: border-box; 
 }
+
+@media (max-width: 768px) {
+    body {
+        width: 100%;
+    }
+    .logo img {
+        width: 80px !important;  
+        height: 80px !important;
+    }  
+}  
 
 .maincontainer{
     background-color: #fff;
@@ -43,8 +80,8 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px;
-    margin-left: 120px; 
+    max-width: 750px;
+    margin-left: 120px;  
 } 
 
 .logo img {
@@ -69,18 +106,57 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100px;
-    height: 100vh;  
+    height: 100vh;
     background-color: #1c1c1c;
     overflow: hidden;
     position: fixed;
     left: 0;
-    top: 0; 
+    top: 0;
     padding: 10px;
     transition: width 0.3s ease;
+    z-index: 1000;
 }
 
 .side-bar:hover {
-    width: 270px;
+    width: 270px; 
+} 
+
+.side-bar.collapsed {
+    width: 60px;
+}
+ 
+.side-bar .menu-text {
+    opacity: 1;
+    display: inline;
+    transition: opacity 0.3s;
+}
+
+.side-bar.collapsed .menu-text {
+    opacity: 0;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .side-bar {
+        width: 60px;
+        height: 100%;  
+    }
+    .side-bar:not(.expanded) .menu-text {
+        opacity: 0;
+        display: none;
+    }
+    .side-bar.expanded {
+        width: 220px;
+    }
+    .maincontainer, .contentBox {
+        margin-left: 60px;
+        transition: margin-left 0.3s;
+        width: calc(100% - 100px); 
+    }
+    .side-bar.expanded ~ .maincontainer,
+    .side-bar.expanded ~ .contentBox {
+        margin-left: 220px;
+    }
 }
 
 .logo {
@@ -151,7 +227,7 @@ body {
 
 .Header{
     display: flex;
-    flex-direction: column;  
+    flex-direction: column; 
 }  
 
 .Header h1 {
@@ -167,6 +243,7 @@ body {
 .Header div{ 
     padding: 10px;
     border-left: #092ae6 5px solid;
+    background-color: aliceblue; 
 }      
 
 .Header span{
@@ -174,6 +251,16 @@ body {
     text-shadow: 0 0 20px hsl(0, 100%, 100%), 0 0 10px rgb(255, 0, 0);   
 } 
 
+.tableContent .azul{  
+    color: #092ae6;
+    text-shadow: 0 0 20px hsl(0, 100%, 100%), 0 0 10px rgb(0, 0, 255); 
+} 
+
+.tableContent .rojo{
+    color: #fa0000;   
+    text-shadow: 0 0 20px hsl(0, 100%, 100%), 0 0 10px rgb(255, 0, 0); 
+}  
+ 
 .content{
     display: flex;
     flex-direction: column;
@@ -243,25 +330,61 @@ body {
 .matrix-row {
     display: flex;
     justify-content: center;
-    gap: 5px; /* Espacio entre los módulos */
+    gap: 5px; 
 }
 
 .matrix-cell {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-    padding: 10px 15px; /* Ajusta el padding para el tamaño del número */
+    padding: 10px 15px;
     text-align: center;
-    font-family: monospace; /* Fuente monoespaciada para alinear mejor los números */
+    font-family: monospace; 
     font-size: 1.1em;
-    display: flex; /* Para centrar el contenido dentro de la celda */
+    display: flex; 
     justify-content: center;
     align-items: center;
-    box-sizing: border-box; /* Importante para el cálculo del ancho */
+    box-sizing: border-box; 
 }
 
 .matrix-wrapper {
     position: relative;
-    display: inline-block; /* Para que el wrapper se ajuste al contenido */
+    display: inline-block;
+    margin: 20px 0;
+}
+
+.matrix-scroll {
+    max-width: 700px;
+    overflow-x: auto;
+    margin-bottom: 1em;
+}  
+
+.matrix-table {
+    border-collapse: separate;
+    border-spacing: 0 10px; 
+    margin: 0 20px; 
+    font-family: monospace;
+    font-size: 1.1em;
+    background: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    min-width: 400px;  
+    width: max-content; 
+}
+
+.matrix-table th, .matrix-table td {
+    padding: 8px 12px;
+    text-align: center;
+}
+
+.matrix-table th {
+    background: #e0e0e0;
+    font-weight: bold;
+}
+
+.matrix-barra {
+    font-weight: bold;
+    color: #333;
+    background: #fff;
 }
 
 .matrix-wrapper::before,
@@ -270,23 +393,131 @@ body {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 20px; /* Ancho de los paréntesis */
-    border: 2px solid #000;
-    border-radius: 50% / 10%; /* Para darle forma redondeada */
+    width: 12px;
+    border: 2.5px solid #222;
+    border-radius: 30px / 60%;
+    z-index: 1;
 }
 
 .matrix-wrapper::before {
-    left: -20px;
-    border-right: none; /* Eliminar borde del lado interior */
+    left: -16px;
+    border-right: none;
 }
 
 .matrix-wrapper::after {
-    right: -20px;
-    border-left: none; /* Eliminar borde del lado interior */
+    right: -16px;
+    border-left: none;
+}
+.matrix-container {
+
+    margin: 0 20px; 
 }
 
-/* Ajuste para el contenido de la matriz */
-.matrix-container {
-    /* ... tu estilo de grid/flexbox ... */
-    margin: 0 20px; /* Margen para que el contenido no se superponga con los paréntesis */
+.resultados-spline, .matriz-spline { 
+    text-align: center; 
+}
+
+.contentBox {  
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+    max-width: 820px;
+    max-height: 700px;
+    margin-left: 120px;
+    margin-top: 25px;  
+}   
+ 
+.contentBox h1{
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; 
+    
+}
+
+@media (max-width: 768px) {
+    .contentBox { 
+        margin-left: 60px; 
+        transition: margin-left 0.3s;
+        width: calc(100% - 100px);
+    } 
+}     
+
+.matriz-spline{
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; 
+}
+
+.matrix-table{
+    width: 100%;
+    border-collapse: collapse; 
+    text-align: left; 
+}
+
+.matrix-table thead th{
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-weight: 600;
+    padding: 15px 20px;
+    border-bottom: 2px solid #dee2e6; 
+}
+
+.matrix-table tbody tr{
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057; 
+}
+
+.matrix-table tbody tr:last-child td {
+     border-bottom: none;
+}
+
+.matrix-table tbody tr:hover {
+     background-color: #f1f3f5;
+    cursor: pointer;
 }  
+
+.tableContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    padding: 20px; 
+    width: 100%;
+    max-width: 500px; 
+    margin-top: 30px; 
+     background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; 
+
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    flex-direction: column; 
+    gap: 5px; 
+    margin-top: 20px;
+    width: 100% ;
+    max-width: 200px;   
+}
+
+.resultados-spline{
+    width: 100%;
+    max-width: 550px;  
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; 
+    padding: 10px;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+}

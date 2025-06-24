@@ -1,4 +1,4 @@
-    let rowCount = 2; 
+let rowCount = 2; 
 document.addEventListener("DOMContentLoaded", () => {
     const morecor = document.getElementById("morecords");
     const coorContent = document.getElementById("tableContent"); 
@@ -34,203 +34,210 @@ function removeCoor() {
 
 // Método de Spline Cuadrático
 
-class SplineCuadratico{
+class SplineCuadratico {
+    constructor(puntos) {
+        this.puntos = puntos.sort((a, b) => a.x - b.x);
+        this.n = this.puntos.length - 1;
+        this.coeficientes = [];
+    }
 
-	constructor(puntos){ // recibe un array de objetos y lo organiza de menor a mayor x
-		this.puntos = puntos.sort((a,b) => a.x - b.x);
-		this.n = this.puntos.length - 1;
-		this.coeficientes = [];
-	}
+    resolver() {
+        const n = this.n;
+        const totalIncog = 3 * n;
+        // Construcción de la matriz A y el vector B usando math.js
+        let A = math.zeros(totalIncog, totalIncog)._data;
+        let B = math.zeros(totalIncog)._data;
+        let idx = 0;
 
-	resolver(){
-		const n = this.n;
-		const totalincog = 3*n;
-		const A = Array.from({ length: totalincog }, () => new Array(totalincog).fill(0));
-		/* A = [ [0,0,0], 
-		         [0,0,0], 
-		         [0,0,0] 
-		        ]
-		*/
 
-		const B = new Array(totalincog).fill(0);
-		let Index = 0;
+        A[idx][0] = 1;
+        B[idx] = 0;
+        idx++;
 
-		// a0=0
-		A[Index][0] = 1; // A[0][0] = 1*a0
-		B[Index] = 0;  // B[0] = 1*a0 + ... + ... = 0
-		Index**= 1; // Index = 1
 
-		// La Condiciones de los extremos
+        let x0 = this.puntos[0].x;
+        A[idx][0] = x0 * x0;
+        A[idx][1] = x0;
+        A[idx][2] = 1;
+        B[idx] = this.puntos[0].y;
+        idx++;
 
-		// Primer Punto (S0(x0) = y0)
-		const x0 = this.puntos[0].x;
-		// Index = 1
-		A[Index][0] = x0*x0; // x0**2 a0
-		A[Index][1] = x0; // x0 b0
-		A[Index][2] = 1; // 1 c0
-		B[Index] =  this.puntos[0].y;
-		Index++;
-		/* A = [ [1,0,0], 
-		         [A[1][0],A[1][1],A[1][2]],
-		        ]
 
-		   B = [ B[0], 
-		         B[1],
-		        ]
-		*/
+        let xn = this.puntos[n].x;
+        let last = 3 * (n - 1);
+        A[idx][last] = xn * xn;
+        A[idx][last + 1] = xn;
+        A[idx][last + 2] = 1;
+        B[idx] = this.puntos[n].y;
+        idx++;
 
-		// Ultimo Punto (Sn-1(xn) = yn)
-		//Index = 2
-		const xn = this.puntos[n].x;
-		const Index2 = 3*(n-1); 
-		/* (n-1) hace referencia al ultimo coeficiente 
-		per example if n=3 ecuaciones cuadraticas,
-		entonces tendremos S0 S1 Sn-1=S3-1=S2,
-		al multiplicar 3*(3-1) = 3*2 = 6
-		"A[m][0]=A[m][0]a0","A[m][3]=A[m][3]a1","A[m][6]=A[m][6]a3"
-		*/
 
-		A[Index][Index2]= xn*xn; // xn**2 an
-		A[Index][Index2+1]= xn; // xn bn
-		A[Index][Index2+2]= 1; // 1 cn
-		B[Index]= this.puntos[n].y;
-		Index++;
-		/* A = [ [1,0,0], 
-		         [A[1][0],A[1][1],A[1][2]],
-		         [A[2][Index2],A[2][Index2+1],A[2][Index2+2]]
-		        ]
+        for (let i = 1; i < n; i++) {
+            let xi = this.puntos[i].x;
+            let yi = this.puntos[i].y;
 
-		   B = [ B[0], 
-		         B[1],
-		         B[Index2]
-		        ]
-		*/
+            let left = 3 * (i - 1);
+            A[idx][left] = xi * xi;
+            A[idx][left + 1] = xi;
+            A[idx][left + 2] = 1;
+            B[idx] = yi;
+            idx++;
 
-		// Continuidad en nodos interiores
-		for(let i=1; i<n; i++){
-			const xi= this.puntos[i].x; // x1 x2 ... xn-1
-			const yi= this.puntos[i].y; // y1 y2 ... yn-1
+            let right = 3 * i;
+            A[idx][right] = xi * xi;
+            A[idx][right + 1] = xi;
+            A[idx][right + 2] = 1;
+            B[idx] = yi;
+            idx++;
+        }
 
-			// Spline izquierdo (intervalo i-1)
-			const leftIndex = 3* (i-1); // 0
-			A[Index][leftIndex]= xi*xi; // xi**2 a0
-			A[Index][leftIndex+1]= xi; // xi b0
-			A[Index][leftIndex+2]= 1; // 1 c0
-			B[Index]= yi;
-			Index++;
+        for (let i = 1; i < n; i++) {
+            let xi = this.puntos[i].x;
 
-			// Spline derecho (intervalo i)
-			const rightIndex = 3*i; // 0
-			A[Index][rightIndex]= xi*xi; // xi**2 a1
-			A[Index][rightIndex+1]= xi; // xi b1
-			A[Index][rightIndex+2]= 1; // 1 c1
-			B[Index]= yi;
-			Index++;
-		}
+            let left = 3 * (i - 1);
+            A[idx][left] = 2 * xi;
+            A[idx][left + 1] = 1;
 
-		// Derivadas continuas en nodos interiores
-		for(let i=1; i<n; i++){
-			const xi= this.puntos[i].x; // x1 x2 ... xn-1
-			const yi= this.puntos[i].y; // y1 y2 ... yn-1
+            let right = 3 * i;
+            A[idx][right] = -2 * xi;
+            A[idx][right + 1] = -1;
+            B[idx] = 0;
+            idx++;
+        }
 
-			// (intervalo i-1)
-			const leftIndex = 3* (i-1); // 0
-			// 2ai-1 xi + bi-1 = yi
-			A[Index][leftIndex]= 2*xi; // 2xi a0
-			A[Index][leftIndex+1]= 1; // 1 b0
-			B[Index]= yi;
-			Index++;
+        // Resolver el sistema con math.js
+        const coef = math.lusolve(A, B).map(arr => arr[0]);
+        this.coeficientes = [];
+        for (let i = 0; i < n; i++) {
+            this.coeficientes.push({
+                a: coef[3 * i],
+                b: coef[3 * i + 1],
+                c: coef[3 * i + 2]
+            });
+        }
 
-			// (intervalo i)
-			const rightIndex = 3*i; // 0
-			// 2ai xi + bi = yi
-			A[Index][rightIndex]= -2*xi; // 2xi a1
-			A[Index][rightIndex+1]= -1; // 1 b1
-			B[Index]= yi;
-			Index++;
-		}
+        return { A, B, coef: this.coeficientes };
+    }
 
-		/*Pichardiño, aqui ya puedes imprimir la matriz, 
-		con todo lo que he hecho hasta aqui
-		
-		La matriz A contiene los coeficientes de los coeficientes
-		y la matriz B contiene los valores y. Example
-
-		A[0][0] A[0][1] ... A[0][N] = B[0]
-		A[1][0] A[1][1] ... A[1][N] = B[1]
-		A[2][0] A[2][1] ... A[2][N] = B[2]
-		*/
-		const valor = this.SistemaLinear(A,B);
-
-		// Almacenar coeficientes
-		this.coeficientes = [];
-		for(let i=0; i<n; i++){
-			const ai = valor[3*i];
-			const bi = valor[3*i+1];
-			const ci = valor[3*i+2];
-			this.coeficientes.push({ a: ai, b: bi, c : ci })
-		} // Pichardiño el array coeficientes puedes utilizarlo para imprimir la ecuacion cuadratica
-
-		return valor;
-	}
-
-	SistemaLinear(A,B){
-		const n = B.length; // Tamaño de ecuaciones
-		const AA= A.map(fila => [...fila]); // AA es copia de A
-		const BB = [...B]; // BB es copia de B
-
-		//Eliminacion gaussiana
-		for(let i=0; i<n; i++){
-			// Pivoteo
-			let maxfila = i; // A[maxfila][i]
-
-			for(let j = i+1; j<n; j++){ // A[1][0]
-				if(Math.abs(AA[j][i]) > Math.abs(A[maxfila][i])){
-					// A[maxfila][i]
-					// A[j][i]
-					maxfila = j;
-					// A[j][i]
-					// A[maxfila][i]
-				}
-			}
-
-			// Intercambiar filas
-			[AA[i], AA[maxfila]] = [AA[maxfila], AA[i]];
-			[BB[i], BB[maxfila]] = [BB[maxfila], BB[i]];
-
-			const pivot = AA[i][i]; // AA[0][0]
-			for(let j=i; j<n; j++)
-				AA[i][j] /= pivot; // AA[0][0]/AA[0][0] = 1 ...
-				BB[i] /= pivot; // BB[0]/B[0] ...
-
-			// Eliminacion hacia adelante
-			for(let j = i+1; j<n; j++){
-				const factor = AA[j][i]; // AA[1...][0]
-				for(let k=i; k<n; k++){
-					AA[j][k] -= factor * AA[i][k]; // AA[1][0...] - (AA[1][0] * AA[0][0...])
-				}
-				BB[j] -= factor * BB[i];
-			}
-		}
-
-		// Sustitucion hacia atras
-		const X = new Array(n).fill(0);
-		for(let i = n-1; i>=0; i--){
-			X[i] = BB[i];
-			for(let j = i+1; j<n; j++){
-				X[i] -= AA[i][j] * X[j];
-			}
-		}
-		return X;
-	}
-
-	evaluacion(x){
-		for(let i=0; i<this.n; i++){
-			if(x >= this.puntos[i].x && x <= this.puntos[i+1].x){
-				const { a, b, c } = this.coeficientes[i];
-				return a * x * x + b * x + c; 
-			}
-		}
-		throw new Error("x fuera del rango de interpolación");
-	}
+    evaluacion(x) {
+        for (let i = 0; i < this.n; i++) {
+            if (x >= this.puntos[i].x && x <= this.puntos[i + 1].x) {
+                const { a, b, c } = this.coeficientes[i];
+                return a * x * x + b * x + c;
+            }
+        }
+        throw new Error("x fuera del rango de interpolación");
+    }
 }
+
+document.getElementById("calcular").addEventListener("click", function() {
+    const coorContent = document.getElementById("tableContent");
+    const puntos = [];
+    for (let i = 1; i < coorContent.rows.length; i++) {
+        const xInput = coorContent.rows[i].querySelector('input[id^="x"]');
+        const yInput = coorContent.rows[i].querySelector('input[id^="y"]');
+        if (xInput && yInput) {
+            const x = parseFloat(xInput.value);
+            const y = parseFloat(yInput.value);
+            if (!isNaN(x) && !isNaN(y)) {
+                puntos.push({ x, y });
+            }
+        }
+    }
+    if (puntos.length < 3) {
+        document.getElementById("resultadosSpline").innerHTML = "Debes ingresar al menos 3 puntos.";
+        return;
+    }
+    try {
+        const spline = new SplineCuadratico(puntos);
+        const { A, B, coef } = spline.resolver();
+
+        let resHtml = "<h3>Coeficientes de los tramos:</h3><ul>";
+        coef.forEach((c, i) => {
+            resHtml += `<li>P${i+1}(x) = ${c.a.toFixed(4)}x² + ${c.b.toFixed(4)}x + ${c.c.toFixed(4)}</li>`;
+        });
+        resHtml += "</ul>";
+        document.getElementById("resultadosSpline").innerHTML = resHtml;
+
+
+        let matHtml = `
+<h3>Matriz del sistema:</h3>
+<div class="matrix-scroll">
+<table class="matrix-table"><thead><tr>`;
+
+
+        for (let i = 0; i < coef.length; i++) {
+            matHtml += `<th>a${i+1}</th><th>b${i+1}</th><th>c${i+1}</th>`;
+        }
+        matHtml += "<th>|</th><th>B</th></tr></thead><tbody>";
+
+        let externos = [0, 1, 2];
+        let internos = [];
+        for (let i = 3; i < A.length; i++) internos.push(i);
+
+        internos.forEach(i => {
+            matHtml += "<tr>";
+            matHtml += A[i].map(a => `<td>${a.toFixed(2)}</td>`).join("");
+            matHtml += `<td class="matrix-barra">|</td><td>${B[i].toFixed(2)}</td>`;
+            matHtml += "</tr>";
+        });
+
+        externos.forEach(i => {
+            matHtml += "<tr>";
+            matHtml += A[i].map(a => `<td>${a.toFixed(2)}</td>`).join("");
+            matHtml += `<td class="matrix-barra">|</td><td>${B[i].toFixed(2)}</td>`;
+            matHtml += "</tr>";
+        });
+ 
+        matHtml += "</tbody></table></div>";
+        document.getElementById("matrizSpline").innerHTML = matHtml;
+
+        // --- GRAFICAR EN GEOGEBRA ---
+        if (window.ggbApplet && typeof window.ggbApplet.evalCommand === "function") {
+            // Borra puntos y curvas anteriores
+            try {
+                for (let i = 1; i <= puntos.length; i++) window.ggbApplet.evalCommand(`Delete[A${i}]`);
+                for (let i = 1; i <= coef.length; i++) window.ggbApplet.evalCommand(`Delete[f${i}]`);
+            } catch (e) {}
+
+            // Grafica los puntos ingresados
+            puntos.forEach((p, i) => {
+                window.ggbApplet.evalCommand(`A${i+1} = (${p.x}, ${p.y})`);
+            });
+
+            const colores = [
+                "#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00",
+                "#a65628", "#f781bf", "#999999", "#dede00", "#00ced1"
+            ];
+
+            // Grafica los segmentos de los splines con colores distintos
+            coef.forEach((c, i) => {
+                const xStart = puntos[i].x;
+                const xEnd = puntos[i+1].x;
+                const poly = `${c.a}*x^2 + ${c.b}*x + ${c.c}`;
+                window.ggbApplet.evalCommand(`f${i+1}(x) = If(x >= ${xStart} && x <= ${xEnd}, ${poly})`);
+                window.ggbApplet.evalCommand(`SetColor[f${i+1}, "${colores[i % colores.length]}"]`);
+                window.ggbApplet.evalCommand(`SetLineThickness[f${i+1}, 5]`);
+            });
+        } else {
+            console.log("GeoGebra aún no está listo para graficar.");
+        }
+    } catch (err) {
+        document.getElementById("resultadosSpline").innerHTML = "Error: " + err.message;
+    } 
+});
+
+// Sidebar para version de telefono
+document.addEventListener("DOMContentLoaded", function() {
+    const sidebar = document.querySelector('.side-bar');
+    sidebar.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            sidebar.classList.toggle('expanded');
+        }
+    });
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768 && !sidebar.contains(e.target)) {
+            sidebar.classList.remove('expanded');
+        }
+    });
+}); 

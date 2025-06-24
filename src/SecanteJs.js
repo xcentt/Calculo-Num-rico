@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const iterationsList = document.getElementById('iterationsList');
 
     calculateButton.addEventListener('click', calculateSecant);
-
+ 
     function calculateSecant() {
         const funcStr = functionInput.value;
         console.log("Graficando función:", funcStr); 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let x_next;
         let iteration = 0;
         let fx_prev, fx_curr;
-        let approxXs = []; // Guardará los puntos aproximados
+        let approxXs = []; 
 
         try {
             while (iteration < maxIterations) {
@@ -125,20 +125,19 @@ document.addEventListener('DOMContentLoaded', () => {
         function createSegmentedBar() {
             const segmentedContainer = document.getElementById('progress-segmented-visual');
             const thumb = document.getElementById('segmented-thumb');
-            segmentedContainer.innerHTML = ''; // Limpiar segmentos existentes
-            // Re-añadir el thumb ya que borramos el innerHTML
+            segmentedContainer.innerHTML = '';
             segmentedContainer.appendChild(thumb);
 
             for (let i = 0; i < maxSegments; i++) {
                 const segment = document.createElement('div');
                 segment.classList.add('progress-segment');
-                segmentedContainer.insertBefore(segment, thumb); // Inserta antes del thumb
+                segmentedContainer.insertBefore(segment, thumb); 
             }
-            updateSegmentedProgressVisual(currentSegmentValue); // Inicializa la visualización
+            updateSegmentedProgressVisual(currentSegmentValue); 
         }
 
         function updateSegmentedProgressVisual(value) {
-            currentSegmentValue = Math.max(minSegments, Math.min(maxSegments, value)); // Clamp value
+            currentSegmentValue = Math.max(minSegments, Math.min(maxSegments, value)); 
             const segments = document.querySelectorAll('#progress-segmented-visual .progress-segment');
             const valueSpan = document.getElementById('value4');
             const thumb = document.getElementById('segmented-thumb');
@@ -165,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Función para manejar el arrastre (mouse y touch)
         function handleDrag(event) {
             if (!isDraggingSegmentedBar) return;
-            event.preventDefault(); // Prevenir selección de texto o scroll
+            event.preventDefault(); 
 
             const segmentedContainer = document.getElementById('progress-segmented-visual');
             const containerRect = segmentedContainer.getBoundingClientRect();
@@ -175,17 +174,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 clientX = event.touches[0].clientX;
             }
 
-            // Calcular la posición relativa dentro del contenedor
             const offsetX = clientX - containerRect.left;
             const containerWidth = containerRect.width;
-            // Dividir el ancho del contenedor por el número de segmentos para obtener el "ancho efectivo" de cada valor
+
             const segmentUnitWidth = containerWidth / maxSegments;
             let newValue = Math.round(offsetX / segmentUnitWidth);
 
-            // Asegurarse de que el valor esté dentro del rango min/max 
             newValue = Math.max(minSegments, Math.min(maxSegments, newValue));
 
-            // Actualizar solo si el valor ha cambiado para evitar repintados excesivos
             if (newValue !== currentSegmentValue) {
                 updateSegmentedProgressVisual(newValue);
             }
@@ -193,15 +189,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Eventos para el arrastre
         document.addEventListener('DOMContentLoaded', () => {
-            createSegmentedBar(); // Inicializa la barra segmentada
+            createSegmentedBar(); 
 
             const segmentedContainer = document.getElementById('progress-segmented-visual');
 
-            // Eventos de ratón
             segmentedContainer.addEventListener('mousedown', (e) => {
                 isDraggingSegmentedBar = true;
-                segmentedContainer.classList.add('dragging'); // Cambiar cursor
-                handleDrag(e); // Actualizar valor inmediatamente al hacer click
+                segmentedContainer.classList.add('dragging'); 
+                handleDrag(e); 
             });
 
             document.addEventListener('mousemove', handleDrag);
@@ -211,12 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 segmentedContainer.classList.remove('dragging'); // Volver al cursor normal
             });
 
-            // Eventos táctiles
             segmentedContainer.addEventListener('touchstart', (e) => {
                 isDraggingSegmentedBar = true;
                 segmentedContainer.classList.add('dragging');
                 handleDrag(e);
-            }, { passive: false }); // Usar { passive: false } para permitir preventDefault
+            }, { passive: false });
 
             document.addEventListener('touchmove', handleDrag, { passive: false });
 
@@ -225,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 segmentedContainer.classList.remove('dragging');
             });
 
-            // Manejar el redimensionamiento de la ventana para recalcular la posición del thumb
             window.addEventListener('resize', () => {
                 updateSegmentedProgressVisual(currentSegmentValue);
             });

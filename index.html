@@ -14,10 +14,10 @@
 
     <link rel="stylesheet" href="./src/styles.css">
     <link rel="canonical" href="https://xcentt.github.io/Calculonumerico/">
-    <link rel="icon" href="/CalculoNumerico/assets/favicon.png" type="image/png">   
+    <link rel="icon" href="assets/favicon-removebg-preview.png" type="image/png">   
 
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#09f">
+    <meta name="theme-color" content="#09f"> 
 
     <!--Font-Family Google-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,15 +27,41 @@
 
 <body>
     <main>
-    <div class="side-bar-container"></div>
-
-    <script>
-        fetch('sidebar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.querySelector('.side-bar-container').innerHTML = data;
-            }); 
-    </script>
-    </main>
+    <!-- Sidebar pegado a la izquierda -->
+    <section class="side-bar">
+        <div class="logo">
+            <img src="./assets/spline 1 black resize.webp" alt="Logo de la aplicacion">
+        </div>
+        <nav class="menu">
+            <ul>
+                <li>
+                    <a href="index.html">
+                        <img src="./assets/home.svg" alt="Inicio" class="imgSideBar">
+                        <span class="menu-text">Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="SplieCuadratico.html">
+                        <img src="./assets/matrix.svg" alt="Spline Cuadrático" class="imgSideBar">
+                        <span class="menu-text">Spline Cuadrático</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Secante.html">
+                        <img src="./assets/secante wave.svg" alt="Método Secante" class="imgSideBar">
+                        <span class="menu-text">Secante</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="Graficadora.html"> 
+                        <img src="./assets/graphic.svg" alt="Gráficadora" class="imgSideBar">
+                        <span class="menu-text">Graficadora</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <!-- Fin Sidebar -->
+</main>
 </body>
 </html>

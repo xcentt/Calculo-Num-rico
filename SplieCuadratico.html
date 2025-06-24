@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Splines Cuadráticos</title>
     <link rel="stylesheet" href="src/stylessSplineCua.css">  
+    <link rel="icon" href="assets/favicon-removebg-preview.png" type="image/png">  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.min.js"></script>
         <!--Font-Family Google-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Notable&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Sidebar pegado a la izquierda -->
@@ -56,8 +58,10 @@
     </section>
 
     <section class="content">
-        <div tableContent>
-        <table>
+        <div tableContent class="tableContent">
+            <h1>Ingrese las coordenadas</h1> 
+            <p>Para calcular el spline cuadrático, ingrese las coordenadas de los puntos que desea interpolar. Puede <span class="azul">agregar</span> o <span class="rojo">eliminar</span> puntos según sea necesario.</p>
+        <table> 
             <tbody id="tableContent">  
             <tr>
             <th>Eje X</th> 
@@ -70,31 +74,59 @@
             </tr> 
             </tbody> 
         </table>
+        <div class="buttons">
                 <button class="MoreCoor" id="morecords" title="Agregar Coordenadas">+</button>   
                 <button class="MinorCords" id="lesscords" title="Eliminar Coordenadas">-</button> 
                 <button class="Calcular" id="calcular" title="Calcular">Calcular</button>
+        </div> 
         </div>  
         
- <section class="matrix-section">
-    <h2>Tu Matriz Calculada</h2>
-    <div class="matrix-wrapper">
-        <div class="matrix-container" style="--matrix-cols: 3;">
-            <div class="matrix-cell">1</div>
-            <div class="matrix-cell">2</div>
-            <div class="matrix-cell">3</div>
-            <div class="matrix-cell">4</div>
-            <div class="matrix-cell">5</div>
-            <div class="matrix-cell">6</div>
-            <div class="matrix-cell">7</div>
-            <div class="matrix-cell">8</div>
-            <div class="matrix-cell">9</div>
-        </div>
-    </div>
-</section> 
-
-  
+        <div id="resultadosSpline" class="resultados-spline"></div>
+        <div id="matrizSpline" class="matriz-spline"></div>
     </section>  
+
+        </main>  
+
+    <div  class="contentBox" id="contentBox">
+    <h1>Gráfica de los Splines Cuadráticos</h1>   
+         
+        <script type="text/javascript" src="https://www.geogebra.org/apps/deployggb.js"></script>
+        <script type="text/javascript">
+                function perspective(p){
+                    ggbApplet.setPerspective(p);
+                }
+                var parameters = {
+                        "id":"ggbApplet",
+                        "appName":"graphing",
+                        "width":800,
+                        "height":550,
+                        "showToolBar":false, 
+                        "borderColor":null,
+                        "showMenuBar":false,
+                        "allowStyleBar":true,
+                        "showAlgebraInput":false, 
+                        "enableLabelDrags":false,
+                        "enableShiftDragZoom":true,
+                        "capturingThreshold":null,
+                        "showToolBarHelp":false,
+                        "errorDialogsActive":true,
+                        "showTutorialLink":true,
+                        "showLogging":true,
+                        "useBrowserForJS":false};
+
+                var applet = new GGBApplet(parameters,true);
+               //  when used with Math Apps Bundle, uncomment this:  
+               //  applet.setHTML5Codebase('GeoGebra/HTML5/5.0/web3d/');
+
+                window.onload = function() { applet.inject('applet_container'); }
+
+        </script>
+
+
+      <p>  <div id="applet_container"></div></p>
+        </div> 
+
+    <script src="https://www.geogebra.org/apps/deployggb.js"></script> 
     <script src="src/splineCuadraticoJs.js"></script>
-    </main> 
 </body> 
-</html> 
+</html>

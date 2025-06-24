@@ -31,7 +31,7 @@ function calcularCoordenadas() {
     }
 
     if (nombreCoordenada.trim() === '') {
-        nombreCoordenada = 'Punto'; // Default name if none provided  
+        nombreCoordenada = 'Punto'; 
     }
 
     if (coordenadasValidas.length > 0) {
@@ -41,7 +41,7 @@ function calcularCoordenadas() {
         const coordenadaString = `${nombreCoordenadaUpper}=(${coordenadasValidas[0]},${coordenadasValidas[1]})`;
         resultadoElement.textContent = coordenadaString;
         resultadoElement.style.color = 'blue';
-        evalInput(coordenadaString); // Call evalInput to show the coordinate in GeoGebra
+        evalInput(coordenadaString); 
         console.log("Coordenada generada:", coordenadaString); 
     } else {
         resultadoElement.textContent = 'No se ingresaron coordenadas válidas. Asegúrate de usar números y puntos para decimales.';
@@ -49,3 +49,4 @@ function calcularCoordenadas() {
     }
 }  
 
+ 
