@@ -214,7 +214,16 @@ document.getElementById("calcular").addEventListener("click", function() {
             coef.forEach((c, i) => {
                 const xStart = puntos[i].x;
                 const xEnd = puntos[i+1].x;
-                const poly = `${c.a}*x^2 + ${c.b}*x + ${c.c}`;
+                let poly;
+                if (c.a.toFixed(4) == 0 && c.b.toFixed(4) != 0) {
+                poly = `${c.b}*x + ${c.c}`;
+                } else if (c.b.toFixed(4) == 0 && c.a.toFixed(4) != 0) {
+                 poly = `${c.a}*x^2 + ${c.c}`;
+                } else if (c.a.toFixed(4) == 0 && c.b.toFixed(4) == 0) {
+                poly = `${c.c}`; 
+                } else {
+                poly = `${c.a}*x^2 + ${c.b}*x + ${c.c}`;
+                }
                 window.ggbApplet.evalCommand(`f${i+1}(x) = If(x >= ${xStart} && x <= ${xEnd}, ${poly})`);
                 window.ggbApplet.evalCommand(`SetColor[f${i+1}, "${colores[i % colores.length]}"]`);
                 window.ggbApplet.evalCommand(`SetLineThickness[f${i+1}, 5]`);
