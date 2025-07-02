@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="buttons">
                     <button class="MoreCoor" title="Agregar Coordenadas">+</button>
                     <button class="MinorCords" title="Eliminar Coordenadas">-</button>
-                    <button class="delete-segment" title="Eliminar Segmento">Eliminar Segmento</button>
+                    <button class="Elim-Segmento" title="Eliminar Segmento">Eliminar Segmento</button>
                 </div>
             </div>
         `;
