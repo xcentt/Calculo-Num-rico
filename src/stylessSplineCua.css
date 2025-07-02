@@ -322,6 +322,23 @@ body {
     font-weight: 600;  
 }
 
+.Segmento, .Elim-Segmento{
+    width: 100%;  
+    height: 30px;  
+    align-self: center; 
+    border-style: none;
+    border-radius: 5px;
+    background-color: #3f3f3f; 
+    color: white; 
+    font-size:medium;     
+    font-weight: 600;   
+} 
+
+.Segmento:hover, .Elim-Segmento:hover{
+    background-color: #555555; 
+    cursor: pointer;   
+} 
+
 .Calcular:hover{
     background-color: #555555; 
     cursor: pointer;   
